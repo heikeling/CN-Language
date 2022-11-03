@@ -297,7 +297,6 @@ def use():
         win.config(menu=menubar)
         filemenu = Menu(menubar, tearoff=0)
         menubar.add_cascade(label='编译', menu=filemenu)
-        filemenu.add_command(label='编译exe', command=by)
         filemenu.add_command(label='运行', command=yx)
         win.config(menu=menubar)
         filemenu = Menu(menubar, tearoff=0)
