@@ -6,6 +6,9 @@
 '''
 import os
 from platform import win32_edition
+import Wdata
+import pygame
+import sys
 import tkinter as tk
 import time
 import easygui as g
@@ -168,6 +171,146 @@ def use():
             try:
                 if "否则如果"in codes:
                     codes=codes.replace("否则如果","elif")
+                if "列表"in codes:
+                    codes=codes.replace("列表","list")
+                if "否则"in codes:
+                    codes=codes.replace("否则","else")
+                if "标题"in codes:
+                    codes=codes.replace("标题","title")
+                if "大小"in codes:
+                    codes=codes.replace("大小","geometry")
+                if "如果"in codes:
+                    codes=codes.replace("如果","if")
+                if "导入库 "in codes:
+                    codes=codes.replace("导入库 ","import ")
+                if "条件循环"in codes:
+                    codes=codes.replace("弹出","while")
+                if "变量循环"in codes:
+                    codes=codes.replace("变量循环","for")
+                if "里面"in codes:
+                    codes=codes.replace("里面","in")
+                if "画布"in codes:
+                    codes=codes.replace("画布","Canvas")
+                if "和"in codes:
+                    codes=codes.replace("和","and")
+                if "定义"in codes:
+                    codes=codes.replace("定义","def")
+                if "打破"in codes:
+                    codes=codes.replace("打破","break")
+                if "创建类"in codes:
+                    codes=codes.replace("创建类","class")
+                if "一起"in codes:
+                    codes=codes.replace("一起","with")
+                if "打开"in codes:
+                    codes=codes.replace("打开","open")
+                if "退出"in codes:
+                    codes=codes.replace("退出","quit")
+                if "监听"in codes:
+                    codes=codes.replace("监听","bind")
+                if "从"in codes:
+                    codes=codes.replace("从","from")
+                if "看作"in codes:
+                    codes=codes.replace("看作","as")
+                if "返回值"in codes:
+                    codes=codes.replace("返回值","return")
+                if "写入"in codes:
+                    codes=codes.replace("写入","write")
+                if "尝试"in codes:
+                    codes=codes.replace("尝试","try")
+                if "报错"in codes:
+                    codes=codes.replace("报错","except")
+                if "（"in codes:
+                    codes=codes.replace("（","(")
+                if "）"in codes:
+                    codes=codes.replace("）",")")
+                if "，"in codes:
+                    codes=codes.replace("，",",")
+                if "："in codes:
+                    codes=codes.replace("：",":")
+                if "获取值"in codes:
+                    codes=codes.replace("获取值",'get')
+                if "窗口插入文本"in codes:
+                    codes=codes.replace("窗口插入文本",'insert')
+                if "多行文本框"in codes:
+                    codes=codes.replace("多行文本框",'tk.Text')
+                if "主菜单"in codes:
+                    codes=codes.replace("主菜单",'add_cascade')
+                if "创建菜单"in codes:
+                    codes=codes.replace("创建菜单",'Menu')
+                if "菜单内容"in codes:
+                    codes=codes.replace("菜单内容",'add_command')
+                if "设置操作"in codes:
+                    codes=codes.replace("设置操作",'config')
+                end=time.time()
+                t=end-start
+                t=str(t)
+                put.insert(INSERT,"用时"+t+"\n")
+                with open("new.py","w")as fp:
+                    fp.write(codes)
+                exec(codes)
+                print(f.read())
+            except (Exception, BaseException) as e:
+                e=str(e)
+                baoc=translator(e)
+                colorprint("代码报错，终止运行\n"+baoc+"\n",'red')
+        def yxf5(event):
+            global 显示文字
+            global 打印
+            global 询问
+            global 弹出
+            global 创建界面
+            global 大小
+            global 标题
+            global 显示按钮
+            global 字符型
+            global 浮点型
+            global 整数型
+            global 多行文本框
+            global 再次编译
+            def colorprint(txt,color='black'):
+                global textMess
+                if put != None :
+                    if put!='black':
+                        put.tag_config(color, foreground=color)   
+                    put.insert(tk.END, txt,color)
+                    put.see(tk.END)
+            def 打印(txt,color='black'):
+                global textMess
+                if put != None :
+                    if put!='black':
+                        put.tag_config(color, foreground=color)   
+                    put.insert(tk.END, txt,color)
+                    put.see(tk.END)
+            def 询问(put):
+                a=g.enterbox(put)
+                return a
+            def 创建界面():
+                return tk.Tk()
+            def 弹出(msg):
+                return g.msgbox(msg)
+            def 显示按钮(对象,文本,函数=None):
+                return tk.Button(对象,text=文本,command=函数)
+            def 显示文字(对象,文本,样式=None):
+                return tk.Label(对象,text=文本,font=样式)
+            def 字符型(bl):
+                return str(bl)
+            def 浮点型(参数):
+                return float(参数)
+            def 整数型(参数):
+                return int(参数)
+            def 再次编译(execs):
+                return exec(execs)
+            def 输入框(对象):
+                return tk.Entry(对象)
+            start=time.time()
+            c=code.get('1.0','end')
+            with open('code.txt',"w")as f:
+                f.write(c)
+            f = open("code.txt")
+            codes=f.read()
+            try:
+                if "否则如果"in codes:
+                    codes=codes.replace("否则如果","elif")
                 if "否则"in codes:
                     codes=codes.replace("否则","else")
                 if "标题"in codes:
@@ -263,47 +406,52 @@ def use():
                 pass
             else:
                 os.system("git clone "+git)
+        global code
         win = tk.Tk()
+        imgBtn = tk.PhotoImage(file='./icon/ico_run.png')
+        imgBtn1 = tk.PhotoImage(file='./icon/ico_new.png')
+        imgBtn2 = tk.PhotoImage(file='./icon/ico_save.png')
+        imgBtn3 = tk.PhotoImage(file='./icon/git.png')
+        btnyx=tk.Button(image=imgBtn,command=yx)
+        btnyx.place(x=0,y=0)
+        btnnew=tk.Button(image=imgBtn1,command=qk)
+        btnnew.place(x=55,y=0)
+        btnsave=tk.Button(image=imgBtn2,command=file)
+        btnsave.place(x=110,y=0)
+        btngit=tk.Button(image=imgBtn3,command=git)
+        btngit.place(x=0,y=600)
         win.iconbitmap('./icon/ico.ico')
         win.title("Cn-可视化中文编程")
-        win.geometry("900x500")
-        btn=tk.Button(win,text='新文件',command=qk)
-        btn.place(x=0,y=0)
-        btn1=tk.Button(win,text="打开",command=opens)
-        btn1.place(x=50,y=0)
-        btn2=tk.Button(win,text="保存",command=file)
-        btn2.place(x=90,y=0)
-        btn5=tk.Button(win,text="api-github",command=api)
-        btn5.place(x=130,y=0)
-        btn6=tk.Button(win,text="git",command=git)
-        btn6.place(x=210,y=0)
-        code=tk.Text(win,height=30,width=60)
-        code.place(x=0,y=30)
-        put=tk.Text(win,height=100,width=60)
-        put.place(x=500,y=30)
+        win.geometry("1000x700")
+        put = tk.Text(win, height=20, width=100)
+        put.place(x=100, y=400)
+        code=tk.Text(win,height=20,width=100)
+        code.place(x=100,y=50)
+
         put.insert(INSERT,"输出框\n")
         code.config(bg='skyblue')
         code.bind("<Button-3>", popupmenu)
-        btn3=tk.Button(win,text="运行",command=yx)
-        btn3.place(x=800,y=0)
-        btn4=tk.Button(win,text="清空output",command=de)
-        btn4.place(x=700,y=0)
         win.config(bg="gray")
         menubar = Menu(win)
         filemenu = Menu(menubar, tearoff=0)
         menubar.add_cascade(label='文件', menu=filemenu)
         filemenu.add_command(label='打开', command=opens)
         filemenu.add_command(label='保存', command=file)
+        filemenu.add_command(label='新文件', command=qk)
+        filemenu.add_command(label='清空输出框', command=de)
         win.config(menu=menubar)
         filemenu = Menu(menubar, tearoff=0)
         menubar.add_cascade(label='编译', menu=filemenu)
-        filemenu.add_command(label='运行', command=yx)
+        filemenu.add_command(label='编译exe', command=by)
+        filemenu.add_command(label='运行 F5', command=yx)
         win.config(menu=menubar)
         filemenu = Menu(menubar, tearoff=0)
         def cmd():
             os.system("cmd")
         menubar.add_cascade(label='终端', menu=filemenu)
         filemenu.add_command(label='新建终端', command=cmd)
+        filemenu.add_command(label='git', command=git)
+        filemenu.add_command(label='github-api', command=api)
         win.config(menu=menubar)
         def fs():
             win.config(bg="pink")
@@ -492,6 +640,7 @@ url("https://www.baidu.com")
             search(code, '导入库', 'failed')
             search(code, '变量循环', 'failed')
             search(code, 'while', 'failed')
+            search(code, 'len', 'failed')
             search(code, '从', 'passed')
             search(code, '如果', 'passed')
             search(code, '打印', 'failed')
@@ -542,8 +691,9 @@ url("https://www.baidu.com")
         btnweb=tk.Button(win,text="我的博客",command=blog)
         btnweb.pack()
         put.insert(INSERT,r+"\n")
+        win.bind("<F5>",yxf5)
+
         win.mainloop()
     except (Exception, BaseException) as e:
         g.msgbox("无法启动，原因"+str(e))
-if __name__ == "__main__":
-    use()
+use()
